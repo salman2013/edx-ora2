@@ -2,4 +2,9 @@
 Initialization Information for Open Assessment Module
 """
 
-__version__ = '7.1.1'
+from importlib.metadata import PackageNotFoundError, version
+
+try:
+    __version__ = version("ora2")
+except PackageNotFoundError:  # pragma: no cover
+    __version__ = "unknown"
