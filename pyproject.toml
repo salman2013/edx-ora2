@@ -66,6 +66,16 @@ fallback_version = "0.0.0.dev0"
 
 [tool.setuptools.packages.find]
 include = ["openassessment*"]
+exclude = ["*.tests", "*.tests.*"]
+
+[tool.setuptools.package-data]
+# locale/ is a symlink to conf/locale/ — include the real path instead
+# (setuptools cannot copy symlinked directories into the wheel)
+"openassessment" = [
+    "conf/locale/**",
+    "templates/**",
+    "xblock/static/**",
+]
 
 [tool.setuptools.exclude-package-data]
 "*" = ["tests*", "*.tests*", "spec*", "*.spec*"]
@@ -188,8 +198,6 @@ uv_constraints = [
 # build_command uses python -m build (not uv build) because the PSR action environment
 # does not have uv available.
 build_command = "python -m pip install --upgrade build && SETUPTOOLS_SCM_PRETEND_VERSION=$NEW_VERSION python -m build"
-allow_zero_version = true
-major_on_zero = false
 
 [tool.isort]
 line_length = 120
