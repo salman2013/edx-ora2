@@ -2,18 +2,17 @@
 const path = require('path');
 const webpackConfig = require('./webpack.prod.config.js');
 
-// When uv installs ora2 as an editable package, it creates src/openassessment/ and
-// symlinks openassessment/ -> src/openassessment/. This means ../../../ traversal from
-// openassessment/xblock/static goes to src/ rather than the project root, so karma can't
-// find node_modules/. Use process.cwd() (guaranteed to be project root when `npm test` runs)
-// to compute absolute paths that bypass the symlink.
+// Use process.cwd() (guaranteed to be project root when `npm test` runs) to compute
+// absolute paths for files outside the basePath (node_modules, require-config.js).
+// This avoids any path traversal issues since basePath (src/openassessment/xblock/static)
+// is 3 levels deep from src/, not the project root.
 const projectRoot = process.cwd();
 
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'openassessment/xblock/static',
+    basePath: 'src/openassessment/xblock/static',
 
 
     plugins: [
@@ -41,9 +40,8 @@ module.exports = function(config) {
       'js/lib/jquery.timepicker.min.js',
       'js/lib/jquery-ui-1.10.4.min.js',
       'js/lib/underscore-min.js',
-      // Use absolute paths from projectRoot for files outside openassessment/ to avoid
-      // symlink traversal: if openassessment/ -> src/openassessment/, then ../../../ from
-      // basePath would reach src/ instead of the project root, missing these files.
+      // Use absolute paths from projectRoot for files outside src/openassessment/ (node_modules,
+      // require-config.js) since basePath is 3 levels deep from src/, not the project root.
       path.resolve(projectRoot, 'node_modules/@babel/polyfill/dist/polyfill.js'),
       path.resolve(projectRoot, 'node_modules/backbone/backbone.js'),
       path.resolve(projectRoot, 'node_modules/backgrid/lib/backgrid.min.js'),
