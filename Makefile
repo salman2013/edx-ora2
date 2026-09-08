@@ -68,13 +68,13 @@ compile_translations: ## compiles the *.po & *.mo files
 	cd ./src/openassessment/ && i18n_tool generate -v && cd ../..
 
 generate_dummy_translations: ## generate dummy translations
-	i18n_tool dummy
+	cd ./src/openassessment/ && i18n_tool dummy
 
 validate_translations: ## Test translation files
 	cd ./src/openassessment/ && i18n_tool validate -v
 
 detect_changed_source_translations: ## check if translation files are up-to-date
-	i18n_tool changed
+	cd ./src/openassessment/ && i18n_tool changed
 
 pull_translations: ## pull translations from Transifex
 	tx pull -a -f -t --mode reviewed --minimum-perc=1
