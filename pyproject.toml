@@ -9,7 +9,7 @@ readme = "README.rst"
 license = "AGPL-3.0-only"
 license-files = ["LICENSE"]
 authors = [
-    { name = "edX", email = "oscm@edx.org" }
+    { name = "Open edX Project", email = "oscm@openedx.org" }
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
